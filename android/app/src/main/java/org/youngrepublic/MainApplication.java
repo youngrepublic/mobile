@@ -3,6 +3,7 @@ package org.youngrepublic;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.microsoft.codepush.react.CodePush;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
@@ -20,6 +21,12 @@ import java.util.List;
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+
+    @Override
+    protected String getJSBundleFile() {
+      return CodePush.getJSBundleFile();
+    }
+
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -27,15 +34,14 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
+      return Arrays.<ReactPackage>asList(new MainReactPackage(),
+          new CodePush(null, getApplicationContext(), BuildConfig.DEBUG),
           new RNFirebasePackage(),
           new RNFirebaseAnalyticsPackage(),
           new RNFirebaseMessagingPackage(),
           new RNFirebaseCrashPackage(),
           new RNFirebaseRemoteConfigPackage(),
-          new RNFirebasePerformancePackage()
-      );
+          new RNFirebasePerformancePackage());
     }
 
     @Override

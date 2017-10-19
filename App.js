@@ -3,7 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
+import codePush from "react-native-code-push";
 import React, { Component } from 'react';
 import {
   Platform,
@@ -36,6 +36,8 @@ export default class App extends Component<{}> {
     );
   }
 }
+
+App = codePush(App);
 
 const styles = StyleSheet.create({
   container: {
